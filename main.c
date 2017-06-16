@@ -147,7 +147,7 @@ void Database_list(struct Connection *conn){
 
 int main(int argc, char *argv[]){
 	if (argc < 3)
-		die("USAGE: ex17 <dbfile> <action> [action params]");
+		die("USAGE: main <dbfile> <action> [action params]");
 
 	char *filename = argv[1];
 	char action = argv[2][0];

@@ -72,7 +72,7 @@ void Database_close(struct Connection *conn){
 		if (conn->file)
 			fclose(conn->file);
 		if (conn->db)
-			free(conn-db);
+			free(conn->db);
 		free(conn);
 	}
 }
@@ -136,7 +136,7 @@ void Database_list(struct Connection *conn){
 	int i = 0;
 	struct Database *db = conn->db;
 
-	for (i = 0; i < MAX_ROWS; i++)
+	for (i = 0; i < MAX_ROWS; i++){
 		struct Address *cur = &db->rows[i];
 
 		if (cur->set){

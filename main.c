@@ -84,7 +84,7 @@ void Database_write(struct Connection *conn){
 	if (rc != 1)
 		die("Failed to write database.");
 
-	rc == fflush(conn->file);
+	rc = fflush(conn->file);
 	if (rc == -1)
 		die("Cannot flush database.");
 }
@@ -94,7 +94,7 @@ void Database_create(struct Connection *conn){
 
 	for (i = 0; i < MAX_ROWS; i++){
 		//make a prototype to initialize it
-		struct Address addr = {.id = 1,.set = 0};
+		struct Address addr = {.id = i,.set = 0};
 		//then just assign it
 		conn->db->rows[i] = addr;
 	}
@@ -107,13 +107,13 @@ void Database_set(struct Connection *conn, int id, const char *name, const char 
 
 	addr->set = 1;
 	//WARNING: bug, read the "How To Break It" and fix this
-	char *res = strncpy(addr->name, name, MAX_DATA);
+	int res = snprintf(addr->name, MAX_DATA, "%s", name);
 	//demonstrate the strncpy bug
-	if (!res)
+	if (res < 0)
 		die("Name copy failed");
 
-	res = strncpy(addr->email, email, MAX_DATA);
-	if (!res)
+	res = snprintf(addr->email, MAX_DATA, "%s", email);
+	if (res < 0)
 		die("Email copy failed");
 }
 
